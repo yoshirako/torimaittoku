@@ -1,0 +1,3 @@
+#!/bin/bash
+
+echo $ENV{'QUERY_STRING'} 
