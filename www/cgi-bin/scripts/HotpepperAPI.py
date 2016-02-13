@@ -162,33 +162,46 @@ def func(param):
    
   # 出力件数
   disp_count = 0
-   
+  
+  priority = 1  
+ 
   # レストランデータ取得
   results = data["results"]
   for shop in results["shop"] :
     line                 = []
+    pc_url               = ""
     name                 = ""
-    station_name         = ""
-    address              = ""
+    g_name               = ""
+
+    # URL
+    if "urls" in shop :
+      pc_url = shop["urls"]["pc"]
     # 店舗名
     if "name" in shop and is_str( shop["name"] ) :
       name = shop["name"]
     line.append( name )
-    # 最寄駅
-    if "station_name" in shop and is_str( shop["station_name"] ):
-      station_name = u"{0}駅".format(shop["station_name"])
-    line.append( station_name )
-    # 住所
-    if "address" in shop and is_str( shop["address"] ):
-      address = shop["address"]
-    line.append( address )
+    # ジャンル
+    if "genre" in shop :
+      g_name = shop["genre"]["name"]
+    line.append( g_name )
     # タブ区切りで出力
     # print "\t".join( line ).encode('utf-8')
-  
 
-    content+="\t".join( line )
-    content+=u"<br />"
+    #優先度
+    priority += 1
+    priority_str = "<div class=\"prio\">" + str(priority) + "</div>"
+    line.append( priority_str )
 
+    # アイコン
+    icon = "<div class=\"icon\"><img src=\"/images/hotpepper_icon.png\" width=\"30\" height=\"30\"></div>"
+    line.append( icon )
+
+    content+=u"<tr><td><a href=\""
+    content+=u"{0}".format( pc_url )
+    content+=u"\">"
+    content+=u"</td><td>".join( line )
+    content+=u"</td></tr>"
+    
   return content
  
   # 出力件数を表示して終了

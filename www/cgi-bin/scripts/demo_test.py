@@ -6,67 +6,40 @@ import urllib
 import json
 import cgi
 import datetime
-import RestSearchAPI2
+import RestSearchAPI
 import HotpepperAPI
 import FoursquareAPI
+#import get_geocode
 
 ###
 # HTML
 ###
 html_body = u"""
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-  <title>とりま、いっとく君</title>
-
-  <!-- Bootstrap -->
-  <link rel="stylesheet" href="../../bootstrap-3.3.6-dist/bootflat.github.io-master/css/bootstrap.min.css">
-
-  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-</head>
-<!--
-<body style="background-color: #ADD5F7;">
--->
-<body style="background-color: #F0FFFF;">
-  <div class="docs-header">
-    <div class="topic" style="background-color: #16193B;">
-      <div class="container">
-        <div class="col-md-12">
-          </br>
-          </br>
-          </br>
-            <b><div style="text-align:center"><font color="white" size="7">とりま、いっとく？（仮）</font></div></b>
-          </br>
-          </br>
-          </br>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container">
-    <div class="row">
+<div class="container">
+<div class="row wow fadeInUp">
       %s
-    </div>
-  </div>
-  </br>
-  </br>
-  </body>
-</html>"""
+</div>
+</div>
+  <script type="text/javascript">
+  $(document).ready(function()
+    {
+        $("#result_tb").tablesorter({
+          sortList:[[2,0]],
+          widgets: ['zebra'],
+          widgetOptions : {
+            zebra : [ "normal-row", "alt-row" ]
+          }
+        });
+    }
+  );
+  </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.25.1/js/jquery.tablesorter.js" ></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+"""
 
 content=''
 
 form=cgi.FieldStorage()
-
 ####
 # 変数の型が文字列かどうかチェック
 ####
@@ -85,6 +58,7 @@ hour=form.getvalue('hour', '')
 day=form.getvalue('day', '')
 sex=form.getvalue('sex', '')
 category=form.getvalue('category', '')
+#address=form.getvalue(u'address', '')
 
 if time == "current":
   todaydetail  =    datetime.datetime.today()
@@ -119,6 +93,10 @@ elif hour >= 23 or hour <= 4:
 hour = str(hour)
 param_result = sex+category+day+timezone
 
+#latlng=get_geocode.adr2geo(address)
+#lat=latlng[0]
+#lng=latlng[1]
+
 content+=u"<div class=\"col-md-2\" style=\"margin-top:60px\">"
 content+=u"--------------------------------"
 content+=u"<br>"
@@ -152,24 +130,31 @@ content+=u"<div class=\"col-md-1\">"
 content+=u"</div>"
 
 ##メインコンテンツ
-content+=u"<div class=\"col-md-9\" style=\"margin-top:60px\">"
+content+=u"<div class=\"col-md-8\">"
 
-content+=u"<h1>ぐるなび</h1>"
-content+=u"<h4>"
-content+=RestSearchAPI2.func(param_result)
-content+=u"</h4>"
+#content+=u"<table id=\"result_tb\" class=\"tablesorter\" bgcolor=\"#ffffff\">"
 
-content+=u"<h1>ホットペッパー</h1>"
-content+=u"<h4>"
+content+=u"<table style=\"font-size:20px;\" id=\"result_tb\" class=\"tablesorter\" bgcolor=\"#ffd5ea\">"
+
+content+=u"<thead>"
+content+=u"<tr>"
+
+content+=u"<th class=\"header headerSortUp\">店名</th>"
+content+=u"<th class=\"header\">カテゴリ</th>"
+content+=u"<th class=\"header\"></th>"
+content+=u"<th class=\"header\">ソース</th>"
+
+content+=u"</tr>"
+content+=u"</thead>"
+
+content+=u"<tbody>"
+content+=RestSearchAPI.func(param_result)
 content+=HotpepperAPI.func(param_result)
-content+=u"</h4>"
-
-content+=u"<h1>Foursquare</h1>"
-content+=u"<h4>"
 content+=FoursquareAPI.func(param_result)
-content+=u"</h4>"
 
-content+="</div>"
+content+=u"</tbody>"
+content+=u"</table>"
+content+=u"</div>"
 
 ##表示
 print (html_body % content).encode('utf-8')

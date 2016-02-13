@@ -7,7 +7,7 @@ import json
 import os
 import ConfigParser
 
-def func(param):
+def func(param, lat, lng):
   content=""
 ####
 # 変数の型が文字列かどうかチェック
@@ -40,9 +40,11 @@ def func(param):
   # エンドポイントURL
   url       = "http://api.gnavi.co.jp/RestSearchAPI/20150630/"
   # 緯度
-  latitude = "35.698358"
+  #latitude = "35.698358"
+  latitude = lat
   #経度
-  longitude = "139.773097"
+  #longitude = "139.773097"
+  longitude = lng
   # カテゴリ
   category_l_all = inifile.get("gnavi","category_l")
   array_category = category_l_all.split(",")
@@ -175,31 +177,41 @@ def func(param):
 # 出力件数
   disp_count = 0
 
+  priority             = 1
+
 # レストランデータ取得
   for rest in data["rest"] :
     line                 = []
+    pc_url               = ""
     name                 = ""
-    access_station       = ""
-    address              = ""
-  # 店舗名
+    code_category_name_l = []
+
+    # URL
+    if "url" in rest :
+      pc_url = u"{0}".format( rest["url"] )
+    # 店舗名
     if "name" in rest and is_str( rest["name"] ) :
       name = u"{0}".format( rest["name"] )
     line.append( name )
-    if "access" in rest :
-      access = rest["access"]
-      # 最寄の駅
-      if "station" in access and is_str( access["station"] ) :
-        access_station = u"{0}".format( access["station"] )
-      line.append( access_station )
-    # 住所
-      if "address" in rest and is_str( rest["address"] ) :
-        address = u"{0}".format(rest["address"])
-      line.append( address )
-    # タブ区切りで出力
-  #    print "\t".join( line ).encode('utf-8')
+    # カテゴリ
+    if "code" in rest and "category_name_l" in rest["code"] :
+      for category_name_l in rest["code"]["category_name_l"] :
+        if is_str( category_name_l ) :
+          code_category_name_l.append( u"{0}".format( category_name_l ) )
+    line.append( code_category_name_l[0] )
+    #優先度
+    priority += 1
+    priority_str = "<div class=\"prio\">" + str(priority) + "</div>"
+    line.append( priority_str )
+    # アイコン
+    icon = "<div class=\"icon\"><img src=\"/images/gnavi_icon.png\" width=\"30\" height=\"30\"></div>"
+    line.append( icon )
 
-    content+="\t".join( line )
-    content+=u"<br />"
+    content+=u"<tr><td><a href=\""
+    content+=u"{0}".format( pc_url )
+    content+=u"\" target=\"_blank\">"
+    content+=u"</td><td>".join( line )
+    content+=u"</td></tr>"
 
   return content
 

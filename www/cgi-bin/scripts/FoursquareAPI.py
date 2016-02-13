@@ -54,6 +54,11 @@ def func(param):
   # セクション
   section = inifile.get("foursquare","section")
   
+### edit by kobayashi 2016-01-19
+  #フリーワード検索
+#  query = inifile.get("foursquare","query") 
+
+
   # 予算
   price = inifile.get("foursquare","price")
   
@@ -75,6 +80,7 @@ def func(param):
     ( "section",          section         ),
     ( "price",            price           ),
     ( "day",              day             ),
+ #   ( "query",            query           ),
     ( "time",             time            )
   ]
   # URL生成
@@ -108,30 +114,46 @@ def func(param):
     print u"データが見つからなかったため終了します。"
     sys.exit()
 
+  priority             = 1
+
   # データ取得
   for item in data['response']['groups'][0]['items']:
     venue = item['venue']
+    tips  = item['tips'][0]
     line                 = []
+    pc_url               = ""
     name                 = ""
-    cityaddress          = ""
+    c_name               = ""
 
+
+    # URL
+    if 'canonicalUrl' in tips :
+      pc_url = tips['canonicalUrl']
+      print pc_url
     # 店舗名
     if 'name' in venue and is_str( venue['name'] ) :
       name = venue['name']
     line.append( name )
-    # 住所
-    if 'location' in venue :
-      city = venue['location']['city']
-      address = venue['location']['address']
-      cityaddress = city + " " + address
-    line.append ( cityaddress )
-  
+    # カテゴリ名
+    if 'categories' in venue :
+      c_name = venue['categories'][0]['name']
+    line.append( c_name )
     # タブ区切りで出力
     #print "\t".join( line ).encode('utf-8')
-    #content+="\t".join( line ).encode('utf-8')
-    #content+=("</br>").encode('utf-8')
-    content+="\t".join( line )
-    content+="</br>"
+    #優先度
+    priority += 1
+    priority_str = "<div class=\"prio\">" + str(priority) + "</div>"
+    line.append( priority_str )
+
+    # アイコン
+    icon = "<div class=\"icon\"><img src=\"/images/foursquare_icon.png\" width=\"30\" height=\"30\"></div>"
+    line.append( icon )
+
+    content+=u"<tr><td><a href=\""
+    content+=u"{0}".format( pc_url )
+    content+=u"\">"
+    content+=u"</td><td>".join( line )
+    content+=u"</td></tr>"
 
   return content
 
