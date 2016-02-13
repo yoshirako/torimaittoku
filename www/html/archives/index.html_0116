@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+  <title>とりま、いっとく君</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="./bootstrap-3.3.6-dist/bootflat.github.io-master/css/bootstrap.min.css">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+
+    <![endif]-->
+</head>
+<!--
+<body style="background-color: #ADD5F7;">
+-->
+<body style="background-color: #F0FFFF;">
+  <div class="docs-header">
+    <div class="topic" style="background-color: #16193B;">
+      <div class="container">
+        <div class="col-md-12">
+          </br>
+          </br>
+          </br>
+            <b><div style="text-align:center"><font color="white" size="7">とりま、いっとく？（仮）</font></div></b>
+          </br>
+          </br>
+          </br>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form method="POST" action="../cgi-bin/scripts/demo_test.py">
+        <!-- main -->
+          <div class="container" style="margin-top:60px">
+        <div class="col-md-2">
+        </div>
+
+        <div class="col-md-9">
+            <div class="row">
+              <div class="col-md-9">
+                <h4>時間</h4>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group">
+                <div class="col-md-2">
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="time" id="time1" value="current" checked="">
+                      なう
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="time" id="time2" value="select" >
+                      時間を選ぶ
+                    </label>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <select name="day"class="form-control">
+                    <option value="WD">平日</option>
+                      <option value="WE">休日</option>
+                  </select>
+                </div>
+                <div class="col-md-2">
+<!--
+                  <input type="text" class="form-control" placeholder="H" name="hour">
+-->
+                  <select name="hour" class="form-control">
+                    <option value="06">06</option>
+                    <option value="07">07</option>
+                    <option value="08">08</option>
+                    <option value="09">09</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="00">00</option>
+                    <option value="01">01</option>
+                    <option value="02">02</option>
+                    <option value="03">03</option>
+                    <option value="04">04</option>
+                    <option value="05">05</option>
+                  </select>
+               </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-9" style="margin-top:30px">
+              <h4>性別</h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <div class="col-md-2">
+                <label>
+                  <input type="radio" name="sex" id="male" value="M" checked="">
+                  男性
+                </label>
+              </div>
+              <div class="col-md-2">
+                <label>
+                  <input type="radio" name="sex" id="female" value="F">
+                  女性
+                </label>
+              </div>
+            </div>
+          </div>
+<!-- カテゴリー -->
+
+          <div class="row">
+            <div class="col-md-9" style="margin-top:30px">
+              <h4>カテゴリー</h4>
+        </div>
+      </div>
+      <div class="row">
+        <div class="form-group">
+          <div class="col-md-2">
+            <label>
+              <input type="radio" name="category" id="j_high" value="JH" checked="">
+              中学生
+            </label>
+
+          </div>
+          <div class="col-md-2">
+            <label>
+              <input type="radio" name="category" id="high" value="HS">
+              高校生
+            </label>
+          </div>
+          <div class="col-md-2">
+            <label>
+              <input type="radio" name="category" id="ba" value="BA">
+              大学生 
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-md-2">
+            <label>
+              <input type="radio" name="category" id="as" value="AS">
+              新人
+            </label>
+          </div>
+          <div class="col-md-2">
+            <label>
+              <input type="radio" name="category" id="mg" value="MG">
+              中堅
+            </label>
+          </div>
+          <div class="col-md-2">
+            <label>
+              <input type="radio" name="category" id="sm" value="SM">
+              管理職
+            </label>
+          </div>
+          <div class="col-md-2">
+            <label>
+              <input type="radio" name="category" id="pr" value="PR">
+              社長
+            </label>
+          </div>
+          <div class="col-md-2">
+            <label>
+              <input type="radio" name="category" id="ex" value="EX">
+              ご隠居
+            </label>
+          </div>
+      </div>
+<div class="row">
+          <div class="col-md-2">
+            <label>
+              <input type="radio" name="category" id="fr" value="FR">
+              主婦A
+            </label>
+          </div>
+          <div class="col-md-2">
+            <label>
+              <input type="radio" name="category" id="sp" value="SP">
+              主婦B
+            </label>
+          </div>
+          <div class="col-md-2">
+            <label>
+              <input type="radio" name="category" id="jr" value="JR">
+              主婦C
+            </label>
+          </div>
+          <div class="col-md-2">
+            <label>
+              <input type="radio" name="category" id="sr" value="SR"> 
+              主婦D
+            </label>
+          </div>
+      </div>
+        <div id="field">
+            <input type="text" id="address" size="70" value="東京都墨田区押上１?１?２" />
+            <span>
+                緯度:<span id="latitude" ></span>  経度:<span id="longitude" ></span>  <span id="failure"></span>
+</span>
+</div>
+
+          <!-- 送信 -->
+      <div class="row">
+        <div class="col-md-11">
+          <center>
+            <button type="submit" class="btn btn-primary btn-lg" style="margin:60px 0 60px 0; padding-left:60px; padding-right:60px;">いっとく？</button>
+          </center>
+        </div>
+      </div>
+    </div>
+  </form>
+</body>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
+<script type="javascript" src="http://labo.tomoyamkung.net/googlemap-sample/v0.2/js/script.js"></script>
+</html>
